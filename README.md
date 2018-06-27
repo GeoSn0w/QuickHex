@@ -28,6 +28,7 @@ It uses the following imports so I assume it shouldn't have problems on most OSe
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 ```
 ### Contact me
 Twitter: https://twitter.com/FCE365

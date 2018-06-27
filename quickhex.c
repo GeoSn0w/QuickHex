@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 
 size_t read_size;
 unsigned char object_buffer[16];
@@ -26,8 +27,13 @@ int main(int argc, char *argv[]){
   } else if (argc == 3){
     const char *file_path = argv[1];
     FILE *object_file = fopen(file_path, "r");
-    offset = atoi(argv[2]);
-    dump_hex(object_file, offset);
+      if (object_file == NULL){
+          fprintf(stderr, "Error opening the file: %s\n",strerror(errno));
+          exit(EXIT_FAILURE);
+      } else{
+          offset = atoi(argv[2]);
+          dump_hex(object_file, offset);
+      }
     return 0;
   } else if (argc > 3){
     printf("Too many commands!\nUsage: %s <file path> <start_offset>\n\n", argv[0]);

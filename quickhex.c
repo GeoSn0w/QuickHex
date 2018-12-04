@@ -24,6 +24,7 @@ int main(int argc, char *argv[]){
     printf("[!] Aside from a file, you need to also specify the beginning offset from where I should start dumping. Specify 0 for the whole file.\n");
     printf("Usage: %s <file path> <start_offset>\n\n", argv[0]);
     exit(EXIT_FAILURE);
+    
   } else if (argc == 3){
     const char *file_path = argv[1];
     FILE *object_file = fopen(file_path, "r");
@@ -34,7 +35,9 @@ int main(int argc, char *argv[]){
           offset = atoi(argv[2]);
           dump_hex(object_file, offset);
       }
+    
     return 0;
+    
   } else if (argc > 3){
     printf("Too many commands!\nUsage: %s <file path> <start_offset>\n\n", argv[0]);
     exit(EXIT_FAILURE);
@@ -42,6 +45,10 @@ int main(int argc, char *argv[]){
 }
 
 void dump_hex(FILE *object_file, int start_offset){
+  if(object_file == NULL){
+    printf("Could not properly open the file. The file is either empty or something went wrong.\n");
+    exit(EXIT_FAILURE);
+  }
   fseek(object_file, start_offset, SEEK_SET); //Unwind the file back to the start, offset 0.
   printf("[i] Beginning the HEX dump of the object file...\n");
   offset = 0;
